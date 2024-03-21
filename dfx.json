@@ -1,0 +1,26 @@
+{
+  "canisters": {
+    "library_app_backend": {
+      "main": "src/library_app_backend/main.mo",
+      "type": "motoko"
+    },
+    "library_app_frontend": {
+      "dependencies": [
+        "library_app_backend"
+      ],
+      "source": [
+        "src/library_app_frontend/dist"
+      ],
+      "type": "assets",
+      "workspace": "library_app_frontend"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
