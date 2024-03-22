@@ -6,8 +6,6 @@ import Trie "mo:base/Trie";
 import Nat32 "mo:base/Nat32";
 import Option "mo:base/Option";
 import Bool "mo:base/Bool";
-import Array "mo:base/Array";
-import Iter "mo:base/Iter";
 
 actor Library {
 
@@ -33,7 +31,7 @@ actor Library {
   private stable var books : Trie.Trie<BookId, Book> = Trie.empty();
   private stable var authors : Trie.Trie<AuthorId, Author> = Trie.empty();
 
-  public func createAuthor(author: Author) : async AuthorId {
+  public func createAuthor(author : Author) : async AuthorId {
     let authorId = nextAuthorId;
     nextAuthorId += 1;
 
@@ -42,7 +40,42 @@ actor Library {
     return authorId;
   };
 
-  public func getAuthor(authorId: AuthorId) : async ?Author {
+  public func getAuthors() : async [Author] {
+    let authorArray = Trie.toArray<AuthorId, Author, Author>(authors, func (k, v) = v);
+
+    return authorArray;
+  };
+
+  public func getAuthorById(authorId : AuthorId) : async ?Author {
+    let result = Trie.find(authors, key(authorId), Nat32.equal);
+
+    return result;
+  };
+
+  public func updateAuthor(authorId : AuthorId, author : Author): async Bool {
+    let result = Trie.find(authors, key(authorId), Nat32.equal);
+    let exists = Option.isSome(result);
+
+    if (exists) {
+      authors := Trie.replace(authors, key(authorId), Nat32.equal, ?author).0;
+    };
+
+    return exists;
+  };
+
+  public func removeAuthor(authorId : AuthorId): async Bool {
+    let result = Trie.find(authors, key(authorId), Nat32.equal);
+    let exists = Option.isSome(result);
+
+    if (exists) {
+      authors := Trie.replace(authors, key(authorId), Nat32.equal, null).0;
+    };
+
+    return exists;
+  };
+
+
+  public func getAuthor(authorId : AuthorId) : async ?Author {
     let result = Trie.find(authors, key(authorId), Nat32.equal);
 
     return result;
