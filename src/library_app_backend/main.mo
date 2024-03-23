@@ -1,5 +1,3 @@
-
-
 import Text "mo:base/Text";
 import Int32 "mo:base/Int32";
 import Trie "mo:base/Trie";
@@ -8,7 +6,6 @@ import Option "mo:base/Option";
 import Bool "mo:base/Bool";
 
 actor Library {
-
   public type BookId = Nat32;
   public type AuthorId = Nat32;
 
@@ -135,12 +132,8 @@ actor Library {
         ?book,
       ).0;
     };
-
     return exists;
   };
-
-
-
 
   private func key(x : BookId): Trie.Key<BookId> {
     return { hash = x ; key = x };
