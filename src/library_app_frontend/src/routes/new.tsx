@@ -19,7 +19,7 @@ const New = () => {
 
   return (
     <>
-      <h2 className={'text-xl'}>Register a new book!</h2>
+      <h2 className={'text-xl'}>Add a new book!</h2>
       <div>
         <BookForm authors={authors} />
       </div>
