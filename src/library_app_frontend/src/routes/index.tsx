@@ -2,11 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { useAuth } from '../hooks/auth';
 import { Loading } from '../components/loading';
 
-export const Route = createFileRoute('/')({
-  component: Index,
-});
-
-function Index() {
+const Index = () => {
   const auth = useAuth();
 
   if (auth.loading) {
@@ -14,9 +10,9 @@ function Index() {
   }
 
   return (
-    <div className='p-2'>
+    <div>
       {!auth.connected ? (
-        <h2>Please login</h2>
+        <p className={'py-6'}>Please login using the button in the header</p>
       ) : (
         <>
           <h3>Welcome Home!</h3>
@@ -25,4 +21,8 @@ function Index() {
       )}
     </div>
   );
-}
+};
+
+export const Route = createFileRoute('/')({
+  component: Index,
+});

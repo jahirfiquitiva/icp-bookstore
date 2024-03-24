@@ -6,10 +6,11 @@
   "scripts": {
     "setup": "npm i && dfx canister create library_app_backend && dfx generate library_app_backend && dfx deploy",
     "start": "vite --port 3000",
-    "dev": "dfx stop && dfx start --background && dfx deploy",
+    "dev": "npm run gen && dfx stop && dfx start --background && dfx deploy",
     "prebuild": "dfx generate",
     "build": "tsc && vite build",
-    "format": "prettier --write \"src/**/*.{json,js,jsx,ts,tsx,css,scss}\""
+    "format": "prettier --write \"src/**/*.{json,js,jsx,ts,tsx,css,scss}\"",
+    "gen": "tsr generate"
   },
   "dependencies": {
     "@connect2ic/core": "^0.2.0-beta.24",
@@ -24,6 +25,7 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@tanstack/router-cli": "^1.20.5",
     "@tanstack/router-vite-plugin": "^1.20.5",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",
