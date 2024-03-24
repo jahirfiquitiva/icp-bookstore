@@ -16,6 +16,14 @@ actor Library {
   public type Book = {
     author : AuthorId;
     id : BookId;
+    genre : Text;
+    pages : Int32;
+    synopsis : Text;
+    title : Text;
+  };
+
+  public type BookToCreate = {
+    author : AuthorId;
     genre : ?Text;
     pages : Int32;
     synopsis : Text;
@@ -88,7 +96,7 @@ actor Library {
     return result;
   };
 
-  public func createBook(book : Book) : async ?BookId {
+  public func createBook(book : BookToCreate) : async ?BookId {
     var author = Trie.find(authors, key(book.author), Nat32.equal);
     let exists = Option.isSome(author);
 
@@ -99,7 +107,7 @@ actor Library {
       let bookItem : Book = {
         id = bookId;
         author = book.author;
-        genre = book.genre;
+        genre = Option.get<Text>(book.genre, "");
         pages = book.pages;
         synopsis = book.synopsis;
         title = book.title;
