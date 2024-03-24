@@ -14,14 +14,14 @@ export default defineConfig({
   optimizeDeps: {
     esbuildOptions: {
       define: {
-        global: "globalThis",
+        global: 'globalThis',
       },
     },
   },
   server: {
     proxy: {
-      "/api": {
-        target: "http://127.0.0.1:4943",
+      '/api': {
+        target: 'http://127.0.0.1:8000',
         changeOrigin: true,
       },
     },
@@ -29,16 +29,14 @@ export default defineConfig({
   plugins: [
     react(),
     TanStackRouterVite(),
-    environment("all", { prefix: "CANISTER_" }),
-    environment("all", { prefix: "DFX_" }),
+    environment('all', { prefix: 'CANISTER_' }),
+    environment('all', { prefix: 'DFX_' }),
   ],
   resolve: {
     alias: [
       {
-        find: "@/backend",
-        replacement: fileURLToPath(
-          new URL("../declarations/library_app_backend", import.meta.url)
-        ),
+        find: '@/backend',
+        replacement: fileURLToPath(new URL('../declarations/library_app_backend', import.meta.url)),
       },
     ],
   },
