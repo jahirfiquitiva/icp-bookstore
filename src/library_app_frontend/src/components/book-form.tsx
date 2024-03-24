@@ -53,9 +53,7 @@ export const BookForm = (props: BookFormProps) => {
                   onChange={(e) => {
                     const newValue = Number(e.target.value);
                     setValue(newValue);
-                    if (newValue === -1) {
-                      setAuthorNameFieldVisible(true);
-                    }
+                    setAuthorNameFieldVisible(newValue === -1);
                   }}>
                   <option value={-2} selected disabled>
                     Select one…

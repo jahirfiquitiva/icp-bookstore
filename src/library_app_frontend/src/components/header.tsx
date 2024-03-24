@@ -49,7 +49,7 @@ export const Header = () => {
                 </Link>
               </li>
               <li>
-                <Link to={'/'} className={'px-2 py-1 [&.active]:underline'}>
+                <Link to={'/new'} className={'px-2 py-1 [&.active]:underline'}>
                   Registrar
                 </Link>
               </li>
