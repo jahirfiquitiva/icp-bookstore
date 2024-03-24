@@ -1,18 +1,12 @@
-import type { Author, Book } from '@/backend/library_app_backend.did';
+import type { Author } from '@/backend/library_app_backend.did';
 import { Field, Form, type FormInstance } from 'houseform';
 import { useRef, useState } from 'react';
 import { z } from 'zod';
 import { Button } from './button';
-
-const availableGenres = ['comedy', 'drama', 'science-fiction', 'productivity', 'academic'] as const;
-
-type Genre = (typeof availableGenres)[number];
-
-type BookData = Exclude<Book, 'id' | 'author' | 'genre'> & {
-  author?: Book['author'];
-  authorName?: string;
-  genre?: Genre;
-};
+import { availableGenres, type BookData } from '../types';
+import { useCreateBook } from '../hooks/new-book';
+import toast from 'react-hot-toast';
+import { useNavigate } from '@tanstack/react-router';
 
 interface BookFormProps {
   authors?: Array<Author>;
@@ -22,11 +16,26 @@ export const BookForm = (props: BookFormProps) => {
   const { authors = [] } = props;
   const formRef = useRef<FormInstance<BookData>>(null);
   const [authorNameFieldVisible, setAuthorNameFieldVisible] = useState(authors.length <= 0);
+  const { createBook, loading } = useCreateBook();
+  const navigate = useNavigate();
 
   return (
-    <Form<BookData> ref={formRef} onSubmit={(values) => alert(JSON.stringify(values))}>
+    <Form<BookData>
+      ref={formRef}
+      onSubmit={(values) => {
+        createBook(values, {
+          onSuccess() {
+            toast.success('Book created successfully', { id: 'create-book' });
+            navigate({ to: '/' });
+          },
+          onError: (e) => {
+            toast.error(e.message, { id: 'create-book' });
+          },
+        });
+      }}>
       {({ isValid, submit }) => (
         <form
+          aria-disabled={loading}
           className={'flex flex-col gap-5'}
           onSubmit={(e) => {
             e.preventDefault();
@@ -47,7 +56,7 @@ export const BookForm = (props: BookFormProps) => {
                     'px-3 py-2 border rounded-md bg-slate-100 dark:bg-slate-900 disabled:opacity-75 disabled:cursor-not-allowed'
                   }
                   defaultValue={authorNameFieldVisible ? -1 : -2}
-                  disabled={authors.length <= 0}
+                  disabled={authors.length <= 0 || loading}
                   value={value}
                   onBlur={onBlur}
                   onChange={(e) => {
@@ -93,7 +102,7 @@ export const BookForm = (props: BookFormProps) => {
                     onChange={(e) => setValue(e.target.value)}
                     placeholder={'Author Name'}
                     className={'px-3 py-2 border rounded-md'}
-                    disabled={!authorNameFieldVisible}
+                    disabled={!authorNameFieldVisible || loading}
                   />
                   {errors.map((error) => (
                     <small className={'text-red-500 text-sm'} key={error}>
@@ -113,6 +122,7 @@ export const BookForm = (props: BookFormProps) => {
                   Book Title
                 </label>
                 <input
+                  disabled={loading}
                   name={'title'}
                   value={value}
                   onBlur={onBlur}
@@ -137,6 +147,7 @@ export const BookForm = (props: BookFormProps) => {
                   Book Synopsis
                 </label>
                 <input
+                  disabled={loading}
                   name={'synopsis'}
                   value={value}
                   onBlur={onBlur}
@@ -159,6 +170,7 @@ export const BookForm = (props: BookFormProps) => {
                   Book genre
                 </label>
                 <select
+                  disabled={loading}
                   name={'genre'}
                   className={
                     'px-3 py-2 border rounded-md bg-slate-100 dark:bg-slate-900 disabled:opacity-75 disabled:cursor-not-allowed'
@@ -194,6 +206,7 @@ export const BookForm = (props: BookFormProps) => {
                   Pages count
                 </label>
                 <input
+                  disabled={loading}
                   name={'pages'}
                   value={value}
                   onBlur={onBlur}
@@ -211,8 +224,8 @@ export const BookForm = (props: BookFormProps) => {
               </div>
             )}
           </Field>
-          <Button disabled={!isValid} type='submit' className={'self-end'}>
-            Submit
+          <Button disabled={!isValid || loading} type='submit' className={'self-end'}>
+            {loading ? 'Loading…' : 'Submit'}
           </Button>
         </form>
       )}
