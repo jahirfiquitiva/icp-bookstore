@@ -1,13 +1,11 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useAuth } from '../hooks/auth';
 import { Loading } from '../components/loading';
-import { useBackend } from '../hooks/backend';
-import { useEffect } from 'react';
 import { useAuthors } from '../hooks/authors';
+import { BookForm } from '../components/book-form';
 
 const New = () => {
   const auth = useAuth();
-  const backend = useBackend();
   const { authors, loading } = useAuthors();
 
   if (auth.loading || loading) {
@@ -16,12 +14,9 @@ const New = () => {
 
   return (
     <>
-      <p className={'py-6'}>Page to create new books</p>
+      <h2 className={'text-xl'}>Register a new book!</h2>
       <div>
-        <p>Authors</p>
-        {authors?.map((a) => {
-          return <p key={`author-${a.id}`}>{a.name}</p>;
-        })}
+        <BookForm authors={authors} />
       </div>
     </>
   );

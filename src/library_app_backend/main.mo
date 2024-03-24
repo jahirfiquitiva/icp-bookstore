@@ -16,7 +16,7 @@ actor Library {
   public type Book = {
     author : AuthorId;
     id : BookId;
-    genre : Text;
+    genre : ?Text;
     pages : Int32;
     synopsis : Text;
     title : Text;
