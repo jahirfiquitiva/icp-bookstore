@@ -4,10 +4,12 @@ import { Loading } from '../components/loading';
 import { useAuthors } from '../hooks/authors';
 import { BookForm } from '../components/book-form';
 import { Login } from '../components/login';
+import { library_app_backend } from '@/backend/index';
 
 const New = () => {
+  const { authors: initialAuthors } = Route.useLoaderData();
   const auth = useAuth();
-  const { authors, loading } = useAuthors();
+  const { authors = initialAuthors, loading } = useAuthors();
 
   if (auth.loading || loading) {
     return <Loading />;
@@ -32,6 +34,13 @@ export const Route = createFileRoute('/new')({
     if (!context.auth.isConnected && !context.auth.isInitializing) {
       throw redirect({ to: '/' });
     }
+  },
+  loader: async ({ context }) => {
+    if (context.auth.isConnected) {
+      const authors = await library_app_backend.getAuthors();
+      return { authors };
+    }
+    return { authors: [] };
   },
   component: New,
 });
