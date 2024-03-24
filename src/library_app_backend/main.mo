@@ -15,6 +15,7 @@ actor Library {
 
   public type Book = {
     author : AuthorId;
+    id : BookId;
     genre : Text;
     pages : Int32;
     synopsis : Text;
@@ -22,6 +23,7 @@ actor Library {
   };
 
   public type Author = {
+    id : AuthorId;
     name : Text;
     // books : [BookId];
   };
@@ -32,11 +34,16 @@ actor Library {
   private stable var books : Trie.Trie<BookId, Book> = Trie.empty();
   private stable var authors : Trie.Trie<AuthorId, Author> = Trie.empty();
 
-  public func createAuthor(author : Author) : async AuthorId {
+  public func createAuthor(author : Text) : async AuthorId {
     let authorId = nextAuthorId;
     nextAuthorId += 1;
 
-    authors := Trie.put<AuthorId, Author>(authors, key(authorId), Nat32.equal, author).0;
+    let authorItem : Author = {
+      id = authorId;
+      name = author;
+    };
+
+    authors := Trie.put<AuthorId, Author>(authors, key(authorId), Nat32.equal, authorItem).0;
 
     return authorId;
   };
@@ -89,8 +96,17 @@ actor Library {
       let bookId = nextBookId;
       nextBookId += 1;
 
+      let bookItem : Book = {
+        id = bookId;
+        author = book.author;
+        genre = book.genre;
+        pages = book.pages;
+        synopsis = book.synopsis;
+        title = book.title;
+      };
+
       // TODO: Add book to author's list of books
-      books := Trie.put<BookId, Book>(books, key(bookId), Nat32.equal, book).0;
+      books := Trie.put<BookId, Book>(books, key(bookId), Nat32.equal, bookItem).0;
 
       return ?bookId;
     };
