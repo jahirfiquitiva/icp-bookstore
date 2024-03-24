@@ -45,12 +45,12 @@ export const Header = () => {
             <ul className={'flex flex-row gap-3 items-center'}>
               <li>
                 <Link to={'/'} className={'px-2 py-1 [&.active]:underline'}>
-                  Biblioteca
+                  Library
                 </Link>
               </li>
               <li>
                 <Link to={'/new'} className={'px-2 py-1 [&.active]:underline'}>
-                  Registrar
+                  Add book
                 </Link>
               </li>
             </ul>
