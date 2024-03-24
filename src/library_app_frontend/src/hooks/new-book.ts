@@ -4,6 +4,7 @@ import { useBackend } from './backend';
 import type { BookData } from '../types';
 import { useNavigate } from '@tanstack/react-router';
 import toast from 'react-hot-toast';
+import type { Book } from '@/backend/library_app_backend.did';
 
 export const useBooks = () => {
   const auth = useAuth();
@@ -36,6 +37,40 @@ export const useBooks = () => {
   }
 
   return { books, loading, error };
+};
+
+export const useBook = (bookId: Book['id']) => {
+  const auth = useAuth();
+  const backend = useBackend();
+  const navigate = useNavigate();
+
+  const {
+    data: book,
+    isLoading: loading,
+    error,
+  } = useQuery({
+    queryKey: ['books', bookId],
+    queryFn: async () => {
+      if (!auth.connected) throw new Error('Log in required');
+      const book = await backend.getBook(bookId);
+      if (!book || !book.length) return null;
+      return book[0];
+    },
+    enabled: auth.connected,
+  });
+
+  if (error) {
+    if ('response' in error) {
+      const { message } = error;
+      if (message && message.includes('403')) {
+        toast.error('Please login again');
+        auth.disconnect();
+        navigate({ to: '/' });
+      }
+    }
+  }
+
+  return { book, loading, error };
 };
 
 export const useCreateBook = () => {
