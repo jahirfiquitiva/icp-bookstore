@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+  html,
+  body {
+    @apply dark:text-slate-50;
+  }
   button {
     cursor: default;
   }
@@ -36,5 +40,12 @@
   &::before {
     content: 'Log in';
     display: inline-block;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  html,
+  body {
+    color-scheme: dark;
   }
 }
