@@ -5,7 +5,7 @@ import { Button } from './button';
 import { useAuth } from '../hooks/auth';
 
 export const Header = () => {
-  const { connected, loading, disconnect } = useAuth();
+  const { connected, loading, disconnect, user } = useAuth();
   const { open } = useDialog();
 
   useEffect(() => {
@@ -19,12 +19,23 @@ export const Header = () => {
         <div className={'flex flex-row gap-4 items-center justify-between'}>
           <h1 className={'text-3xl font-semibold'}>Bookstore</h1>
           {connected ? (
-            <Button
-              onClick={() => {
-                disconnect();
-              }}>
-              Log out
-            </Button>
+            <div className={'flex flex-row gap-3 items-center'}>
+              <img
+                src={`https://source.boringavatars.com/beam/44/${user}`}
+                loading={'lazy'}
+                decoding={'async'}
+                width={44}
+                height={44}
+                className={'rounded-full bg-emerald-400'}
+              />
+              <Button
+                className={'bg-red-500 text-white dark:bg-red-400'}
+                onClick={() => {
+                  disconnect();
+                }}>
+                Log out
+              </Button>
+            </div>
           ) : !loading ? (
             <ConnectDialog />
           ) : null}
