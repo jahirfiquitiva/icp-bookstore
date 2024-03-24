@@ -23,7 +23,7 @@ actor Library {
 
   public type Author = {
     name : Text;
-    books : [BookId];
+    // books : [BookId];
   };
 
   private stable var nextBookId : BookId = 0;
