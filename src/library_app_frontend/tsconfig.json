@@ -18,7 +18,8 @@
     "types": ["vite/client"],
     "verbatimModuleSyntax": true,
     "paths": {
-      "@/backend": ["./../declarations/library_app_backend/"]
+      "@/backend": ["./../declarations/library_app_backend/"],
+      "@/backend/*": ["./../declarations/library_app_backend/*"]
     }
   },
   "include": ["src"]

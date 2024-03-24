@@ -5,14 +5,31 @@
       "type": "motoko"
     },
     "library_app_frontend": {
-      "dependencies": [
-        "library_app_backend"
-      ],
-      "source": [
-        "src/library_app_frontend/dist"
-      ],
+      "dependencies": ["library_app_backend"],
+      "source": ["src/library_app_frontend/dist"],
       "type": "assets",
       "workspace": "library_app_frontend"
+    },
+    "internet_identity": {
+      "candid": "https://github.com/dfinity/internet-identity/releases/latest/download/internet_identity.did",
+      "frontend": {},
+      "remote": {
+        "id": {
+          "ic": "rdmx6-jaaaa-aaaaa-aaadq-cai"
+        }
+      },
+      "type": "custom",
+      "wasm": "https://github.com/dfinity/internet-identity/releases/latest/download/internet_identity_dev.wasm.gz"
+    }
+  },
+  "networks": {
+    "local": {
+      "bind": "127.0.0.1:8000",
+      "type": "ephemeral"
+    },
+    "ic": {
+      "providers": ["https://mainnet.dfinity.network"],
+      "type": "persistent"
     }
   },
   "defaults": {

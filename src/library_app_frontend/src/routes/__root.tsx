@@ -1,18 +1,19 @@
-import { createRootRoute, Link, Outlet } from '@tanstack/react-router';
+import { createRootRouteWithContext, Outlet } from '@tanstack/react-router';
+import type { useConnect } from '@connect2ic/react';
+import { Header } from '../components/header';
 
-export const Route = createRootRoute({
+interface BookstoreRouterContext {
+  // The ReturnType of your useAuth hook or the value of your AuthContext
+  auth: ReturnType<typeof useConnect>;
+}
+
+export const Route = createRootRouteWithContext<BookstoreRouterContext>()({
   component: () => (
     <>
-      <div className='p-2 flex gap-2'>
-        <Link to='/' className='[&.active]:font-bold'>
-          Home
-        </Link>{' '}
-        {/* <Link to='/about' className='[&.active]:font-bold'>
-          About
-        </Link> */}
-      </div>
-      <hr />
-      <Outlet />
+      <Header />
+      <main>
+        <Outlet />
+      </main>
     </>
   ),
 });

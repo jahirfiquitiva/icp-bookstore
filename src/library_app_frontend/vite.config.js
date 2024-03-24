@@ -37,7 +37,7 @@ export default defineConfig({
       {
         find: "@/backend",
         replacement: fileURLToPath(
-          new URL("../declarations", import.meta.url)
+          new URL("../declarations/library_app_backend", import.meta.url)
         ),
       },
     ],

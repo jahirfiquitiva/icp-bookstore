@@ -1,33 +1,37 @@
-import { type FormEventHandler, useState } from 'react';
-import { library_app_backend } from '@/backend';
+import { createClient } from '@connect2ic/core';
+import { RouterProvider } from '@tanstack/react-router';
+import { InternetIdentity } from '@connect2ic/core/providers/internet-identity';
+import * as library_app_backend from '@/backend/index';
+import { Connect2ICProvider, useConnect } from '@connect2ic/react';
+import { router } from './router';
 
-function App() {
-  const [greeting, setGreeting] = useState('');
-
-  const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
-    event.preventDefault();
+const client = createClient({
+  canisters: {
     // @ts-expect-error idk
-    const name = event.target.elements.name.value;
-    // @ts-expect-error idk
-    library_app_backend.greet(name).then((greeting) => {
-      setGreeting(greeting);
-    });
-    // return false;
-  };
+    library_app_backend,
+  },
+  providers: [
+    new InternetIdentity({
+      providerUrl: 'http://127.0.0.1:8000/?canisterId=bkyz2-fmaaa-aaaaa-qaaaq-cai',
+      dev: true,
+    }),
+  ],
+  globalProviderConfig: {
+    /*
+     * Disables dev mode in production
+     * Should be enabled when using local canisters
+     */
+    dev: true,
+  },
+});
 
-  return (
-    <main>
-      <img src='/logo2.svg' alt='DFINITY logo' />
-      <br />
-      <br />
-      <form action='#' onSubmit={handleSubmit}>
-        <label htmlFor='name'>Enter your name: &nbsp;</label>
-        <input id='name' alt='Name' type='text' />
-        <button type='submit'>Click Me!</button>
-      </form>
-      <section id='greeting'>{greeting}</section>
-    </main>
-  );
-}
+const InnerApp = () => {
+  const auth = useConnect();
+  return <RouterProvider router={router} context={{ auth }} />;
+};
 
-export default App;
+export const App = () => (
+  <Connect2ICProvider client={client}>
+    <InnerApp />
+  </Connect2ICProvider>
+);
