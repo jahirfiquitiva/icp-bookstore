@@ -15,7 +15,7 @@ function Index() {
       ) : (
         <>
           <h3>Welcome Home!</h3>
-          <p>User: {auth.principal.toString()}</p>
+          <p>User: {auth.principal?.toString()}</p>
         </>
       )}
     </div>
