@@ -4,6 +4,7 @@ import { InternetIdentity } from '@connect2ic/core/providers/internet-identity';
 import * as library_app_backend from '@/backend';
 import { Connect2ICProvider, useConnect } from '@connect2ic/react';
 import { router } from './router';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const browser: 'safari' | 'others' = 'others';
 
@@ -30,9 +31,15 @@ const client = createClient({
   },
 });
 
+const queryClient = new QueryClient();
+
 const InnerApp = () => {
   const auth = useConnect();
-  return <RouterProvider router={router} context={{ auth }} />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} context={{ auth }} />
+    </QueryClientProvider>
+  );
 };
 
 export const App = () => (
