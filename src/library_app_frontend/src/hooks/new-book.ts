@@ -1,12 +1,48 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useAuth } from './auth';
 import { useBackend } from './backend';
 import type { BookData } from '../types';
+import { useNavigate } from '@tanstack/react-router';
+import toast from 'react-hot-toast';
+
+export const useBooks = () => {
+  const auth = useAuth();
+  const backend = useBackend();
+  const navigate = useNavigate();
+
+  const {
+    data: books,
+    isLoading: loading,
+    error,
+  } = useQuery({
+    queryKey: ['books'],
+    queryFn: async () => {
+      if (!auth.connected) throw new Error('Log in required');
+      const books = await backend.getBooks();
+      return books;
+    },
+    enabled: auth.connected,
+  });
+
+  if (error) {
+    if ('response' in error) {
+      const { message } = error;
+      if (message && message.includes('403')) {
+        toast.error('Please login again');
+        auth.disconnect();
+        navigate({ to: '/' });
+      }
+    }
+  }
+
+  return { books, loading, error };
+};
 
 export const useCreateBook = () => {
   const queryClient = useQueryClient();
   const auth = useAuth();
   const backend = useBackend();
+  const navigate = useNavigate();
 
   const {
     mutate: createBook,
@@ -41,6 +77,17 @@ export const useCreateBook = () => {
       });
     },
   });
+
+  if (error) {
+    if ('response' in error) {
+      const { message } = error;
+      if (message && message.includes('403')) {
+        toast.error('Please login again');
+        auth.disconnect();
+        navigate({ to: '/' });
+      }
+    }
+  }
 
   return { createBook, error, loading };
 };

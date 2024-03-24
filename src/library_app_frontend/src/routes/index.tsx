@@ -2,6 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { useAuth } from '../hooks/auth';
 import { Loading } from '../components/loading';
 import { Login } from '../components/login';
+import { BooksList } from '../components/books-list';
 
 const Index = () => {
   const auth = useAuth();
@@ -14,8 +15,8 @@ const Index = () => {
 
   return (
     <>
-      <h3>Welcome Home!</h3>
-      <p>User: {auth.user?.toString()}</p>
+      <h3>Welcome!</h3>
+      <BooksList />
     </>
   );
 };
