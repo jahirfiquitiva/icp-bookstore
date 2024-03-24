@@ -1,9 +1,15 @@
+import type { Book } from '@/backend/library_app_backend.did';
 import { useBooks } from '../hooks/new-book';
 import { BookItem } from './book-item';
 import { Loading } from './loading';
 
-export const BooksList = () => {
-  const { books = [], loading } = useBooks();
+interface BooksListProps {
+  initialList?: Array<Book>;
+}
+
+export const BooksList = (props: BooksListProps) => {
+  const { initialList = [] } = props;
+  const { books = initialList, loading } = useBooks();
 
   if (loading) return <Loading />;
   if (!books.length) {
