@@ -1,4 +1,4 @@
-import { ConnectButton, ConnectDialog, useConnect, useDialog } from '@connect2ic/react';
+import { ConnectDialog, useDialog } from '@connect2ic/react';
 import { useEffect } from 'react';
 
 export const Header = () => {

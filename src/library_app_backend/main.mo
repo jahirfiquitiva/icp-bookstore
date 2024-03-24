@@ -6,8 +6,8 @@ import Option "mo:base/Option";
 import Bool "mo:base/Bool";
 
 actor Library {
-  public shared (msg) func whoami() : async Principal {
-    msg.caller;
+  public query ({ caller }) func whoami() : async Principal {
+    return caller;
   };
 
   public type BookId = Nat32;

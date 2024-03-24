@@ -1,7 +1,8 @@
 import { createClient } from '@connect2ic/core';
 import { RouterProvider } from '@tanstack/react-router';
 import { InternetIdentity } from '@connect2ic/core/providers/internet-identity';
-import * as library_app_backend from '@/backend/index';
+// import * as library_app_backend from '@/backend/index';
+import * as library_app_backend from './../../declarations/library_app_backend';
 import { Connect2ICProvider, useConnect } from '@connect2ic/react';
 import { router } from './router';
 

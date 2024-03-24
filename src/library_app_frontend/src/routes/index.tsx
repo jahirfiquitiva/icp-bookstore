@@ -1,17 +1,7 @@
-import { ConnectDialog, useConnect } from '@connect2ic/react';
-import { createFileRoute, redirect } from '@tanstack/react-router';
+import { useConnect } from '@connect2ic/react';
+import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/')({
-  // beforeLoad: ({ context, location }) => {
-  //   if (!context.auth.isConnected && !location.hash.includes('authorize')) {
-  //     throw redirect({
-  //       to: '/login',
-  //       search: {
-  //         redirect: location.href,
-  //       },
-  //     });
-  //   }
-  // },
   component: Index,
 });
 
