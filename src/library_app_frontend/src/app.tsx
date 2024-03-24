@@ -5,6 +5,7 @@ import * as library_app_backend from '@/backend';
 import { Connect2ICProvider, useConnect } from '@connect2ic/react';
 import { router } from './router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Toaster } from 'react-hot-toast';
 
 const browser: 'safari' | 'others' = 'others';
 
@@ -38,6 +39,7 @@ const InnerApp = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} context={{ auth }} />
+      <Toaster position={'bottom-center'} />
     </QueryClientProvider>
   );
 };
