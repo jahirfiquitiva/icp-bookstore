@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import environment from 'vite-plugin-environment';
 import dotenv from 'dotenv';
+import { TanStackRouterVite } from '@tanstack/router-vite-plugin';
 
 dotenv.config({ path: '../../.env' });
 
@@ -13,30 +14,29 @@ export default defineConfig({
   optimizeDeps: {
     esbuildOptions: {
       define: {
-        global: "globalThis",
+        global: 'globalThis',
       },
     },
   },
   server: {
     proxy: {
-      "/api": {
-        target: "http://127.0.0.1:4943",
+      '/api': {
+        target: 'http://127.0.0.1:8000',
         changeOrigin: true,
       },
     },
   },
   plugins: [
     react(),
-    environment("all", { prefix: "CANISTER_" }),
-    environment("all", { prefix: "DFX_" }),
+    TanStackRouterVite(),
+    environment('all', { prefix: 'CANISTER_' }),
+    environment('all', { prefix: 'DFX_' }),
   ],
   resolve: {
     alias: [
       {
-        find: "declarations",
-        replacement: fileURLToPath(
-          new URL("../declarations", import.meta.url)
-        ),
+        find: '@/backend',
+        replacement: fileURLToPath(new URL('../declarations/library_app_backend', import.meta.url)),
       },
     ],
   },

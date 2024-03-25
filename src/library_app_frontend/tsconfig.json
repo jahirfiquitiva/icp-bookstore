@@ -15,7 +15,12 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "types": ["vite/client"]
+    "types": ["vite/client"],
+    "verbatimModuleSyntax": true,
+    "paths": {
+      "@/backend": ["./../declarations/library_app_backend/"],
+      "@/backend/*": ["./../declarations/library_app_backend/*"]
+    }
   },
   "include": ["src"]
 }
