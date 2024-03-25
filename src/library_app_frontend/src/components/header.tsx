@@ -14,7 +14,7 @@ export const Header = () => {
   }, [connected]);
 
   return (
-    <header className={'py-8 px-4 bg-slate-100 dark:bg-slate-800 dark:text-slate-100'}>
+    <header className={'py-8 px-4 bg-gray-100 dark:bg-gray-800 dark:text-gray-100'}>
       <div className={'flex flex-col gap-6 max-w-3xl mx-auto'}>
         <div className={'flex flex-row gap-4 items-center justify-between'}>
           <h1 className={'text-3xl font-semibold'}>Bookstore</h1>

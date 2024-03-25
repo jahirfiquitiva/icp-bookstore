@@ -2,7 +2,7 @@ export const Footer = () => {
   return (
     <footer
       className={
-        'w-full max-w-3xl mx-auto flex flex-row gap-2 items-center justify-between py-4 px-2 md:px-0 border-t dark:border-t-slate-600'
+        'w-full max-w-3xl mx-auto flex flex-row gap-2 items-center justify-between py-4 px-2 md:px-0 border-t dark:border-t-gray-600'
       }>
       <p>Copyright © {new Date().getFullYear()}</p>
       <div className={'flex flex-row gap-2.5'}>
