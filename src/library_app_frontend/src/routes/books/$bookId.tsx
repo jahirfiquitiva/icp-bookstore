@@ -4,15 +4,18 @@ import { useAuthor } from '../../hooks/authors';
 import { useBook } from '../../hooks/books';
 import { Button } from '../../components/button';
 import toast from 'react-hot-toast';
+import { useAuth } from '../../hooks/auth';
+import { Login } from '../../components/login';
 
 const BookPage = () => {
   const params = Route.useParams();
+  const { connected } = useAuth();
   const { book, loading } = useBook(Number(params.bookId));
   const { author, loading: loadingAuthor } = useAuthor(book?.author || -1);
 
-  if (loading) {
-    return <Loading />;
-  }
+  if (loading) return <Loading />;
+
+  if (!connected) return <Login />;
 
   if (!book) {
     return <p>This book does not exist</p>;

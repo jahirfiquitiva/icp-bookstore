@@ -53,6 +53,11 @@ export const Header = () => {
                   Add book
                 </Link>
               </li>
+              <li>
+                <Link to={'/authors'} className={'px-2 py-1 [&.active]:underline'}>
+                  Authors
+                </Link>
+              </li>
             </ul>
           </nav>
         ) : null}

@@ -12,8 +12,9 @@ export const BooksList = (props: BooksListProps) => {
   const { books = initialList, loading } = useBooks();
 
   if (loading) return <Loading />;
+
   if (!books.length) {
-    return <p>No books found at this time :c</p>;
+    return <p>No books found at this time.</p>;
   }
 
   return (
