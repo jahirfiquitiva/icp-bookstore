@@ -4,6 +4,7 @@ import Trie "mo:base/Trie";
 import Nat32 "mo:base/Nat32";
 import Option "mo:base/Option";
 import Bool "mo:base/Bool";
+import Array "mo:base/Array";
 
 actor Library {
   public query ({ caller }) func whoami() : async Principal {
@@ -126,6 +127,12 @@ actor Library {
     let bookArray = Trie.toArray<BookId, Book, Book>(books, func(k, v) = v);
 
     return bookArray;
+  };
+
+  public func getBooksByAuthor(authorId : AuthorId) : async [Book] {
+    let bookArray = Trie.toArray<BookId, Book, Book>(books, func(k, v) = v);
+    let filteredArray = Array.filter<Book>(bookArray, func b = b.author == authorId);
+    return filteredArray;
   };
 
   public func getBook(bookId : BookId) : async ?Book {
