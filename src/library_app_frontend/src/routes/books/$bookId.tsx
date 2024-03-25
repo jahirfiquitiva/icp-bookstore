@@ -1,7 +1,9 @@
-import { createFileRoute, redirect } from '@tanstack/react-router';
+import { Link, createFileRoute, redirect } from '@tanstack/react-router';
 import { Loading } from '../../components/loading';
 import { useAuthor } from '../../hooks/authors';
 import { useBook } from '../../hooks/books';
+import { Button } from '../../components/button';
+import toast from 'react-hot-toast';
 
 const BookPage = () => {
   const params = Route.useParams();
@@ -17,7 +19,7 @@ const BookPage = () => {
   }
 
   return (
-    <section>
+    <section className={'flex flex-col gap-8'}>
       <div className={'px-2 py-4 flex flex-col gap-6 md:flex-row'}>
         <img
           src={`https://source.boringavatars.com/marble/128/${encodeURIComponent(book.title)}?square=true`}
@@ -55,6 +57,28 @@ const BookPage = () => {
             </span>
           </div>
         </div>
+      </div>
+      <div className={'flex flex-col md:flex-row gap-4'}>
+        {/** TODO: link to /edit/$bookId */}
+        <Link
+          to={'/books/$bookId'}
+          params={{ bookId: book.id.toString() }}
+          className={
+            'flex flex-row items-center gap-2 px-3 py-2 min-h-[2.75rem] rounded-lg bg-blue-500 text-white dark:bg-blue-400'
+          }>
+          Edit
+        </Link>
+        <Button
+          className={'bg-red-500 text-white dark:bg-red-400'}
+          onClick={() => {
+            const confirmed = confirm('Are you sure you would like to delete this book?');
+            if (confirmed) {
+              // TODO: call delete mutation
+              toast.success('Book deleted successfully');
+            }
+          }}>
+          Delete
+        </Button>
       </div>
     </section>
   );
