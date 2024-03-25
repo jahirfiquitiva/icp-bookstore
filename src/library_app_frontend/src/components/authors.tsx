@@ -13,7 +13,7 @@ export const AuthorsList = () => {
 
   return (
     <section id={'authors'} className={'flex flex-col gap-3'}>
-      <h2>Authors:</h2>
+      <h2 className={'text-xl'}>Authors:</h2>
       <ul className={'flex flex-col gap-2'}>
         {authors.map((a) => (
           <li key={a.id} className={'flex flex-row items-center self-start'}>

@@ -10,7 +10,7 @@ const Index = () => {
   if (!auth.connected) return <Login />;
   return (
     <>
-      <h3>Welcome!</h3>
+      <h2 className={'text-xl'}>Welcome!</h2>
       <BooksList />
     </>
   );

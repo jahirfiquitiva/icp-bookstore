@@ -3,16 +3,18 @@ import { useAuth } from '../../hooks/auth';
 import { Loading } from '../../components/loading';
 import { Login } from '../../components/login';
 import { BooksList } from '../../components/books-list';
+import { useAuthor } from '../../hooks/authors';
 
 const AuthorBooksPage = () => {
   const params = Route.useParams();
   const auth = useAuth();
+  const { author } = useAuthor(Number(params.authorId));
 
   if (auth.loading) return <Loading />;
   if (!auth.connected) return <Login />;
   return (
     <>
-      <h3>Books by author</h3>
+      <h2 className={'text-xl'}>Books by {author ? author.name : 'author'}</h2>
       <BooksList authorId={Number(params.authorId)} />
     </>
   );
