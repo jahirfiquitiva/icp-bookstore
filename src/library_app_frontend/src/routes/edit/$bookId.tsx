@@ -1,31 +1,46 @@
-import { createFileRoute, redirect } from '@tanstack/react-router'
-import { useBook } from '../../hooks/books'
+import { createFileRoute, redirect } from '@tanstack/react-router';
+import { useBook } from '../../hooks/books';
 
-import { BookForm } from '../../components/book-form'
+import { BookForm } from '../../components/book-form';
+import { useAuth } from '../../hooks/auth';
+import { useAuthors } from '../../hooks/authors';
+import { Loading } from '../../components/loading';
+import { Login } from '../../components/login';
 
 const BookPage = () => {
-  const params = Route.useParams()
-  const { book, loading } = useBook(Number(params.bookId))
+  const auth = useAuth();
+  const params = Route.useParams();
+  const { authors, loading } = useAuthors();
+  const { book, loading: loadingBook } = useBook(Number(params.bookId));
+
+  if (auth.loading || loading || loadingBook) {
+    return <Loading />;
+  }
+
+  if (!auth.connected) {
+    return <Login />;
+  }
 
   return (
-    <main>
-      <h1>Edit book</h1>
-      {loading && <span>Loading...</span>}
-      {book && <BookForm initialData={book} edit />}
-    </main>
-  )
-}
+    <>
+      <h2 className={'text-xl'}>Edit book</h2>
+      <div>
+        <BookForm authors={authors} initialData={book} edit />
+      </div>
+    </>
+  );
+};
 
 export const Route = createFileRoute('/edit/$bookId')({
   beforeLoad: async ({ params, context }) => {
     if (!context.auth.isConnected && !context.auth.isInitializing) {
       // Needs sign in
-      throw redirect({ to: '/' })
+      throw redirect({ to: '/' });
     }
     if (typeof params.bookId === 'undefined') {
       // No book id
-      throw redirect({ to: '/' })
+      throw redirect({ to: '/' });
     }
   },
-  component: BookPage
-})
+  component: BookPage,
+});
