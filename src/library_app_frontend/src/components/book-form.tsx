@@ -42,7 +42,10 @@ export const BookForm = (props: BookFormProps) => {
                 toast.success('Book updated successfully', {
                   id: 'update-book',
                 });
-                navigate({ to: '/' });
+                navigate({
+                  to: '/books/$bookId',
+                  params: { bookId: props.initialData?.id?.toString()! },
+                });
               },
               onError: (e) => {
                 toast.error(e.message, { id: 'update-book' });

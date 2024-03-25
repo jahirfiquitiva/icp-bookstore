@@ -14,6 +14,7 @@ export const useBooks = () => {
   const {
     data: books,
     isLoading: loading,
+    isRefetching,
     error,
   } = useQuery({
     queryKey: ['books'],
@@ -36,7 +37,7 @@ export const useBooks = () => {
     }
   }
 
-  return { books, loading, error };
+  return { books, loading: loading || isRefetching, error };
 };
 
 export const useBook = (bookId: Book['id']) => {
@@ -47,6 +48,7 @@ export const useBook = (bookId: Book['id']) => {
   const {
     data: book,
     isLoading: loading,
+    isRefetching,
     error,
   } = useQuery({
     queryKey: ['books', bookId],
@@ -70,7 +72,7 @@ export const useBook = (bookId: Book['id']) => {
     }
   }
 
-  return { book, loading, error };
+  return { book, loading: loading || isRefetching, error };
 };
 
 export const useCreateBook = () => {
