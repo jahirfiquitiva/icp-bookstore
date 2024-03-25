@@ -1,7 +1,7 @@
-import { Link, createFileRoute, redirect } from '@tanstack/react-router';
+import { Link, createFileRoute, redirect, useNavigate } from '@tanstack/react-router';
 import { Loading } from '../../components/loading';
 import { useAuthor } from '../../hooks/authors';
-import { useBook } from '../../hooks/books';
+import { useBook, useRemoveBook } from '../../hooks/books';
 import { Button } from '../../components/button';
 import toast from 'react-hot-toast';
 import { useAuth } from '../../hooks/auth';
@@ -12,17 +12,15 @@ const BookPage = () => {
   const { connected } = useAuth();
   const { book, loading } = useBook(Number(params.bookId));
   const { author, loading: loadingAuthor } = useAuthor(book?.author || -1);
+  const { removeBook } = useRemoveBook();
+  const navigate = useNavigate();
 
   if (loading) return <Loading />;
 
   if (!connected) return <Login />;
 
   if (!book) {
-    return <p>This book does not exist</p>
-  }
-
-  if (removeError) {
-    return <p>It was not possible to remove the book</p>
+    return <p>This book does not exist</p>;
   }
 
   return (
@@ -66,9 +64,8 @@ const BookPage = () => {
         </div>
       </div>
       <div className={'flex flex-col md:flex-row gap-4'}>
-        {/** TODO: link to /edit/$bookId */}
         <Link
-          to={'/books/$bookId'}
+          to={'/edit/$bookId'}
           params={{ bookId: book.id.toString() }}
           className={
             'flex flex-row items-center gap-2 px-3 py-2 min-h-[2.75rem] rounded-lg bg-blue-500 text-white dark:bg-blue-400'
@@ -80,8 +77,15 @@ const BookPage = () => {
           onClick={() => {
             const confirmed = confirm('Are you sure you would like to delete this book?');
             if (confirmed) {
-              // TODO: call delete mutation
-              toast.success('Book deleted successfully');
+              removeBook(book.id, {
+                onSuccess: () => {
+                  toast.success('Book deleted successfully');
+                  navigate({ to: '/' });
+                },
+                onError: (e) => {
+                  toast.error(e.message);
+                },
+              });
             }
           }}>
           Delete
@@ -95,12 +99,12 @@ export const Route = createFileRoute('/books/$bookId')({
   beforeLoad: async ({ params, context }) => {
     if (!context.auth.isConnected && !context.auth.isInitializing) {
       // Needs sign in
-      throw redirect({ to: '/' })
+      throw redirect({ to: '/' });
     }
     if (typeof params.bookId === 'undefined') {
       // No book id
-      throw redirect({ to: '/' })
+      throw redirect({ to: '/' });
     }
   },
-  component: BookPage
-})
+  component: BookPage,
+});
