@@ -25,7 +25,7 @@ export const BookItem = (props: BookItemProps) => {
           <p className={'font-medium'}>{props.book.title}</p>
           <span
             className={
-              'text-sm bg-gray-100 dark:bg-gray-700 rounded-full px-1.5 py-0.5 self-start'
+              'text-sm bg-gray-100 dark:bg-gray-700 rounded-full px-2 py-0.5 self-start'
             }>
             {props.book.genre}
           </span>
