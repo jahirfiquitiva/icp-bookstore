@@ -10,6 +10,12 @@
   button {
     cursor: default;
   }
+  input,
+  select,
+  textarea {
+    @apply border dark:border-slate-600;
+    @apply bg-slate-100 dark:bg-slate-800;
+  }
 }
 
 .button-styles.ii-styles {
@@ -27,7 +33,7 @@
   & > img {
     max-width: 1.5rem;
     margin: 0;
-    filter: grayscale(1) brightness(6) invert(1);
+    filter: slatescale(1) brightness(6) invert(1);
   }
 
   & > div {

@@ -8,7 +8,10 @@ interface BookItemProps {
 export const BookItem = (props: BookItemProps) => {
   return (
     <Link to={`/books/$bookId`} params={{ bookId: props.book.id.toString() }}>
-      <div className={'bg-white border rounded-md px-2 py-4 flex flex-col gap-3 dark:bg-slate-800 dark:border-slate-600'}>
+      <div
+        className={
+          'bg-white border rounded-md px-2 py-4 flex flex-col gap-3 dark:bg-slate-800 dark:border-slate-600'
+        }>
         <img
           src={`https://source.boringavatars.com/marble/128/${encodeURIComponent(props.book.title)}?square=true`}
           loading={'lazy'}

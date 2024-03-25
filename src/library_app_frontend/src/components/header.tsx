@@ -1,8 +1,8 @@
 import { ConnectDialog, useDialog } from '@connect2ic/react';
 import { Link } from '@tanstack/react-router';
 import { useEffect } from 'react';
-import { Button } from './button';
 import { useAuth } from '../hooks/auth';
+import { Button } from './button';
 
 export const Header = () => {
   const { connected, loading, disconnect, user } = useAuth();
