@@ -6,13 +6,8 @@ import { BooksList } from '../components/books-list';
 
 const Index = () => {
   const auth = useAuth();
-
-  if (auth.loading) {
-    return <Loading />;
-  }
-
+  if (auth.loading) return <Loading />;
   if (!auth.connected) return <Login />;
-
   return (
     <>
       <h3>Welcome!</h3>

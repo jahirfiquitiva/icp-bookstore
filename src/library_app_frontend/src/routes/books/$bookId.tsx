@@ -1,4 +1,9 @@
-import { Link, createFileRoute, redirect, useNavigate } from '@tanstack/react-router';
+import {
+  Link,
+  createFileRoute,
+  redirect,
+  useNavigate,
+} from '@tanstack/react-router';
 import { Loading } from '../../components/loading';
 import { useAuthor } from '../../hooks/authors';
 import { useBook, useRemoveBook } from '../../hooks/books';
@@ -16,7 +21,6 @@ const BookPage = () => {
   const navigate = useNavigate();
 
   if (loading) return <Loading />;
-
   if (!connected) return <Login />;
 
   if (!book) {
@@ -75,7 +79,9 @@ const BookPage = () => {
         <Button
           className={'bg-red-500 text-white dark:bg-red-400'}
           onClick={() => {
-            const confirmed = confirm('Are you sure you would like to delete this book?');
+            const confirmed = confirm(
+              'Are you sure you would like to delete this book?',
+            );
             if (confirmed) {
               removeBook(book.id, {
                 onSuccess: () => {

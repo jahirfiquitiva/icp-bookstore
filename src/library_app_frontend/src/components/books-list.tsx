@@ -1,10 +1,16 @@
+import type { Book } from '@/backend/library_app_backend.did';
 import { useBooks } from '../hooks/books';
 import { BookItem } from './book-item';
 import { Loading } from './loading';
 import { Link } from '@tanstack/react-router';
 
-export const BooksList = () => {
-  const { books = [], loading } = useBooks();
+interface BooksListProps {
+  authorId?: Book['author'];
+}
+
+export const BooksList = (props: BooksListProps) => {
+  const { authorId } = props;
+  const { books = [], loading } = useBooks(authorId);
 
   if (loading) return <Loading />;
 

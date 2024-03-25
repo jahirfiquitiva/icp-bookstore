@@ -17,7 +17,10 @@ export const AuthorsList = () => {
       <ul className={'flex flex-col gap-2'}>
         {authors.map((a) => (
           <li key={a.id} className={'flex flex-row items-center self-start'}>
-            <Link className={'self-start'}>
+            <Link
+              to={'/authors/$authorId'}
+              params={{ authorId: a.id.toString() }}
+              className={'self-start'}>
               <div className={'flex flex-row items-center gap-1 self-start'}>
                 <img
                   src={`https://source.boringavatars.com/beam/28/${encodeURIComponent(a.name)}`}

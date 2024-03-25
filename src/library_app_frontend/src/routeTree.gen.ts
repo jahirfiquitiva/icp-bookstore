@@ -18,6 +18,7 @@ import { Route as BooksIndexImport } from './routes/books/index'
 import { Route as AuthorsIndexImport } from './routes/authors/index'
 import { Route as EditBookIdImport } from './routes/edit/$bookId'
 import { Route as BooksBookIdImport } from './routes/books/$bookId'
+import { Route as AuthorsAuthorIdImport } from './routes/authors/$authorId'
 
 // Create/Update Routes
 
@@ -56,6 +57,11 @@ const BooksBookIdRoute = BooksBookIdImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const AuthorsAuthorIdRoute = AuthorsAuthorIdImport.update({
+  path: '/authors/$authorId',
+  getParentRoute: () => rootRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -66,6 +72,10 @@ declare module '@tanstack/react-router' {
     }
     '/new': {
       preLoaderRoute: typeof NewImport
+      parentRoute: typeof rootRoute
+    }
+    '/authors/$authorId': {
+      preLoaderRoute: typeof AuthorsAuthorIdImport
       parentRoute: typeof rootRoute
     }
     '/books/$bookId': {
@@ -96,6 +106,7 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren([
   IndexRoute,
   NewRoute,
+  AuthorsAuthorIdRoute,
   BooksBookIdRoute,
   EditBookIdRoute,
   AuthorsIndexRoute,

@@ -6,7 +6,7 @@ import { useNavigate } from '@tanstack/react-router';
 import toast from 'react-hot-toast';
 import type { Book } from '@/backend/library_app_backend.did';
 
-export const useBooks = () => {
+export const useBooks = (authorId?: Book['author']) => {
   const auth = useAuth();
   const backend = useBackend();
   const navigate = useNavigate();
@@ -20,7 +20,10 @@ export const useBooks = () => {
     queryKey: ['books'],
     queryFn: async () => {
       if (!auth.connected) throw new Error('Log in required');
-      const books = await backend.getBooks();
+      const books =
+        typeof authorId === 'undefined'
+          ? await backend.getBooks()
+          : await backend.getBooksByAuthor(authorId);
       return books;
     },
     enabled: auth.connected,

@@ -13,14 +13,8 @@ const BookPage = () => {
   const { authors, loading } = useAuthors();
   const { book, loading: loadingBook } = useBook(Number(params.bookId));
 
-  if (auth.loading || loading || loadingBook) {
-    return <Loading />;
-  }
-
-  if (!auth.connected) {
-    return <Login />;
-  }
-
+  if (auth.loading || loading || loadingBook) return <Loading />;
+  if (!auth.connected) return <Login />;
   return (
     <>
       <h2 className={'text-xl'}>Edit book</h2>

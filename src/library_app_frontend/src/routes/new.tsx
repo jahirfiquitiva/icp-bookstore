@@ -8,15 +8,8 @@ import { Login } from '../components/login';
 const New = () => {
   const auth = useAuth();
   const { authors, loading } = useAuthors();
-
-  if (auth.loading || loading) {
-    return <Loading />;
-  }
-
-  if (!auth.connected) {
-    return <Login />;
-  }
-
+  if (auth.loading || loading) return <Loading />;
+  if (!auth.connected) return <Login />;
   return (
     <>
       <h2 className={'text-xl'}>Add a new book!</h2>
