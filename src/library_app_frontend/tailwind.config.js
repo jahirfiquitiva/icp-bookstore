@@ -7,7 +7,7 @@ export default {
     extend: {
       fontFamily: {
         sans: [
-          ['var(--font-inter)', 'Inter', ...fontFamily.sans],
+          ['Inter', ...fontFamily.sans],
           {
             fontFeatureSettings:
               // eslint-disable-next-line max-len
