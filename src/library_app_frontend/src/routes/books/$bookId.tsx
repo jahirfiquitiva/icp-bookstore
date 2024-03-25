@@ -1,8 +1,8 @@
 import { library_app_backend } from '@/backend/index';
 import { createFileRoute, redirect } from '@tanstack/react-router';
-import { useBook } from '../../hooks/new-book';
 import { Loading } from '../../components/loading';
 import { useAuthor } from '../../hooks/authors';
+import { useBook } from '../../hooks/books';
 
 const BookPage = () => {
   const params = Route.useParams();

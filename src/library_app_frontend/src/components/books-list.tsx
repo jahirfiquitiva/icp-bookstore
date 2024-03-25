@@ -1,5 +1,5 @@
 import type { Book } from '@/backend/library_app_backend.did';
-import { useBooks } from '../hooks/new-book';
+import { useBooks } from '../hooks/books';
 import { BookItem } from './book-item';
 import { Loading } from './loading';
 
