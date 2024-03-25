@@ -14,10 +14,10 @@ export const useBooks = (authorId?: Book['author']) => {
   const {
     data: books,
     isLoading: loading,
-    isRefetching,
     error,
   } = useQuery({
-    queryKey: ['books'],
+    queryKey:
+      typeof authorId === 'undefined' ? ['books'] : ['books', 'by', authorId],
     queryFn: async () => {
       if (!auth.connected) throw new Error('Log in required');
       const books =
@@ -40,7 +40,7 @@ export const useBooks = (authorId?: Book['author']) => {
     }
   }
 
-  return { books, loading: loading || isRefetching, error };
+  return { books, loading, error };
 };
 
 export const useBook = (bookId: Book['id']) => {
@@ -51,7 +51,6 @@ export const useBook = (bookId: Book['id']) => {
   const {
     data: book,
     isLoading: loading,
-    isRefetching,
     error,
   } = useQuery({
     queryKey: ['books', bookId],
@@ -75,7 +74,7 @@ export const useBook = (bookId: Book['id']) => {
     }
   }
 
-  return { book, loading: loading || isRefetching, error };
+  return { book, loading, error };
 };
 
 export const useCreateBook = () => {

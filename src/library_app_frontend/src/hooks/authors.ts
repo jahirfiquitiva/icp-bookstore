@@ -38,7 +38,7 @@ export const useAuthors = () => {
   return { authors, loading, error };
 };
 
-export const useAuthor = (authorId: Author['id']) => {
+export const useAuthor = (authorId?: Author['id']) => {
   const auth = useAuth();
   const backend = useBackend();
   const navigate = useNavigate();
@@ -51,11 +51,13 @@ export const useAuthor = (authorId: Author['id']) => {
     queryKey: ['authors', authorId],
     queryFn: async () => {
       if (!auth.connected) throw new Error('Log in required');
+      if (typeof authorId === 'undefined')
+        throw new Error('Author does not exist');
       const author = await backend.getAuthorById(authorId);
       if (!author || !author.length) return null;
       return author[0];
     },
-    enabled: auth.connected,
+    enabled: auth.connected && typeof authorId !== 'undefined',
   });
 
   if (error) {
@@ -77,7 +79,11 @@ export const useCreateAuthor = () => {
   const auth = useAuth();
   const backend = useBackend();
 
-  const { mutate: createAuthor, error } = useMutation<number, Error, Author['name']>({
+  const { mutate: createAuthor, error } = useMutation<
+    number,
+    Error,
+    Author['name']
+  >({
     mutationKey: ['author'],
     mutationFn: async (variables) => {
       if (!auth.connected) throw new Error('Log in required');

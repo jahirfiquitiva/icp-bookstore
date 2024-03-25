@@ -16,7 +16,7 @@ const BookPage = () => {
   const params = Route.useParams();
   const { connected } = useAuth();
   const { book, loading } = useBook(Number(params.bookId));
-  const { author, loading: loadingAuthor } = useAuthor(book?.author || -1);
+  const { author, loading: loadingAuthor } = useAuthor(book?.author);
   const { removeBook } = useRemoveBook();
   const navigate = useNavigate();
 
