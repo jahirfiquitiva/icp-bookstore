@@ -21,10 +21,11 @@ export const BookForm = (props: BookFormProps) => {
   const [authorNameFieldVisible, setAuthorNameFieldVisible] = useState(
     authors.length <= 0,
   );
-  const { createBook, loading } = useCreateBook();
-  const { updateBook } = useUpdateBook();
-  const { author } = useAuthor(props.initialData?.author || -1);
+  const { createBook, loading: creating } = useCreateBook();
+  const { updateBook, loading: updating } = useUpdateBook();
   const navigate = useNavigate();
+
+  const loading = creating || updating;
 
   return (
     <Form<BookData>
@@ -35,7 +36,6 @@ export const BookForm = (props: BookFormProps) => {
             {
               ...values,
               id: props.initialData?.id!,
-              author: author?.id!,
             },
             {
               onSuccess() {
@@ -72,7 +72,13 @@ export const BookForm = (props: BookFormProps) => {
           <Field
             name={'author'}
             onBlurValidate={z.number()}
-            initialValue={authorNameFieldVisible ? -1 : -2}>
+            initialValue={
+              props.initialData
+                ? props.initialData.author
+                : authorNameFieldVisible
+                  ? -1
+                  : -2
+            }>
             {({ value, setValue, onBlur, errors }) => (
               <div className={'flex flex-col gap-2'}>
                 <label className={'font-medium'} htmlFor={'author'}>
@@ -83,7 +89,6 @@ export const BookForm = (props: BookFormProps) => {
                   className={
                     'px-3 py-2 rounded-md disabled:opacity-75 disabled:cursor-not-allowed'
                   }
-                  defaultValue={authorNameFieldVisible ? -1 : -2}
                   disabled={authors.length <= 0 || loading}
                   value={value}
                   onBlur={onBlur}
@@ -113,7 +118,6 @@ export const BookForm = (props: BookFormProps) => {
           {authorNameFieldVisible ? (
             <Field
               name={'authorName'}
-              initialValue={author?.name}
               onBlurValidate={
                 authorNameFieldVisible
                   ? z
