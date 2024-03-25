@@ -18,7 +18,7 @@ export const BooksList = (props: BooksListProps) => {
     return (
       <div className={'flex flex-col gap-2'}>
         <p>No books found at this time.</p>
-        <Link to={'/new'} className={'underline'}>
+        <Link to={'/new'} className={'underlines self-start'}>
           Add book
         </Link>
       </div>

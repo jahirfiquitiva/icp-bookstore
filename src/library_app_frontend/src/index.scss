@@ -20,37 +20,6 @@
   }
 }
 
-.button-styles.ii-styles {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  background: theme('colors.emerald.500');
-  color: black;
-  gap: 0.5rem;
-  border-radius: 0.5rem;
-  padding: 0.25rem 0.75rem;
-  min-height: 2.75rem;
-  @apply dark:bg-emerald-400;
-
-  & > img {
-    max-width: 1.5rem;
-    margin: 0;
-    filter: grayscale(1) brightness(6) invert(1);
-  }
-
-  & > div {
-    display: none;
-    visibility: hidden;
-    pointer-events: none;
-    user-select: none;
-  }
-
-  &::before {
-    content: 'Log in';
-    display: inline-block;
-  }
-}
-
 @media (prefers-color-scheme: dark) {
   html,
   body {
