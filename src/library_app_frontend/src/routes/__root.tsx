@@ -3,15 +3,18 @@ import type { useConnect } from '@connect2ic/react';
 import { Header } from '../components/header';
 import { Footer } from '../components/footer';
 
-interface BookstoreRouterContext {
+interface LibraryRouterContext {
   auth: ReturnType<typeof useConnect>;
 }
 
-export const Route = createRootRouteWithContext<BookstoreRouterContext>()({
+export const Route = createRootRouteWithContext<LibraryRouterContext>()({
   component: () => (
     <>
       <Header />
-      <main className={'flex-1 flex flex-col gap-6 w-full max-w-3xl mx-auto py-6 px-4 md:px-0'}>
+      <main
+        className={
+          'flex-1 flex flex-col gap-6 w-full max-w-3xl mx-auto py-6 px-4 md:px-0'
+        }>
         <Outlet />
       </main>
       <Footer />
