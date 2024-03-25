@@ -5,10 +5,16 @@
 @layer base {
   html,
   body {
-    @apply dark:text-slate-50;
+    @apply dark:text-gray-50;
   }
   button {
     cursor: default;
+  }
+  input,
+  select,
+  textarea {
+    @apply border dark:border-gray-600;
+    @apply bg-gray-100 dark:bg-gray-800;
   }
 }
 

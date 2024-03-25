@@ -12,13 +12,14 @@ export const BooksList = (props: BooksListProps) => {
   const { books = initialList, loading } = useBooks();
 
   if (loading) return <Loading />;
+
   if (!books.length) {
-    return <p>No books found at this time :c</p>;
+    return <p>No books found at this time.</p>;
   }
 
   return (
     <section id={'books'}>
-      <ul className={'grid grid-cols-2 sm:grid-cols-3'}>
+      <ul className={'grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6'}>
         {books.map((b) => (
           <li>
             <BookItem book={b} key={`book-${b.id}`} />

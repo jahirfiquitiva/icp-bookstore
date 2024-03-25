@@ -16,6 +16,7 @@ import { Route as IndexImport } from './routes/index'
 import { Route as EditIndexImport } from './routes/edit/index'
 import { Route as BooksIndexImport } from './routes/books/index'
 import { Route as EditBookIdImport } from './routes/edit/$bookId'
+import { Route as AuthorsIndexImport } from './routes/authors/index'
 import { Route as BooksBookIdImport } from './routes/books/$bookId'
 
 // Create/Update Routes
@@ -42,6 +43,8 @@ const BooksIndexRoute = BooksIndexImport.update({
 
 const EditBookIdRoute = EditBookIdImport.update({
   path: '/edit/$bookId',
+const AuthorsIndexRoute = AuthorsIndexImport.update({
+  path: '/authors/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -68,6 +71,8 @@ declare module '@tanstack/react-router' {
     }
     '/edit/$bookId': {
       preLoaderRoute: typeof EditBookIdImport
+    '/authors/': {
+      preLoaderRoute: typeof AuthorsIndexImport
       parentRoute: typeof rootRoute
     }
     '/books/': {
@@ -88,6 +93,7 @@ export const routeTree = rootRoute.addChildren([
   NewRoute,
   BooksBookIdRoute,
   EditBookIdRoute,
+  AuthorsIndexRoute,
   BooksIndexRoute,
   EditIndexRoute,
 ])

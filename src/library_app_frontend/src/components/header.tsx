@@ -1,8 +1,8 @@
 import { ConnectDialog, useDialog } from '@connect2ic/react';
 import { Link } from '@tanstack/react-router';
 import { useEffect } from 'react';
-import { Button } from './button';
 import { useAuth } from '../hooks/auth';
+import { Button } from './button';
 
 export const Header = () => {
   const { connected, loading, disconnect, user } = useAuth();
@@ -14,7 +14,7 @@ export const Header = () => {
   }, [connected]);
 
   return (
-    <header className={'py-8 px-4 bg-slate-100 dark:bg-slate-800 dark:text-slate-100'}>
+    <header className={'py-8 px-4 bg-gray-100 dark:bg-gray-800 dark:text-gray-100'}>
       <div className={'flex flex-col gap-6 max-w-3xl mx-auto'}>
         <div className={'flex flex-row gap-4 items-center justify-between'}>
           <h1 className={'text-3xl font-semibold'}>Bookstore</h1>
@@ -51,6 +51,11 @@ export const Header = () => {
               <li>
                 <Link to={'/new'} className={'px-2 py-1 [&.active]:underline'}>
                   Add book
+                </Link>
+              </li>
+              <li>
+                <Link to={'/authors'} className={'px-2 py-1 [&.active]:underline'}>
+                  Authors
                 </Link>
               </li>
             </ul>
